@@ -7,7 +7,6 @@ defaults:
   - logger: null
   - trainer: default
   - paths: default
-  - extras: default
   - hydra: default
 
 task_name: "eval"
