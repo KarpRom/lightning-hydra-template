@@ -32,7 +32,7 @@ def instantiate_callbacks(callbacks_cfg: DictConfig) -> List[Callback]:
 
     return callbacks
 
-
+#a modif car test plusieur trainer or il n'en reste
 def instantiate_loggers(logger_cfg: DictConfig) -> List[Logger]:
     """Instantiates loggers from config.
 

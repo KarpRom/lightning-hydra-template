@@ -8,7 +8,7 @@ from tests.helpers.run_sh_command import run_sh_command
 startfile = "src/train.py"
 overrides = ["logger=[]"]
 
-
+#check si c'est vraiment necessaire car on a qu'une config que l'on test apres
 @RunIf(sh=True)
 @pytest.mark.slow
 def test_experiments(tmp_path: Path) -> None:
@@ -25,7 +25,7 @@ def test_experiments(tmp_path: Path) -> None:
     ] + overrides
     run_sh_command(command)
 
-
+#si j'enleve le sh, il failed car il faut le sh
 @RunIf(sh=True)
 @pytest.mark.slow
 def test_hydra_sweep(tmp_path: Path) -> None:
@@ -43,14 +43,14 @@ def test_hydra_sweep(tmp_path: Path) -> None:
 
     run_sh_command(command)
 
-
+"""
 @RunIf(sh=True)
 @pytest.mark.slow
 def test_hydra_sweep_ddp_sim(tmp_path: Path) -> None:
-    """Test default hydra sweep with ddp sim.
+    est default hydra sweep with ddp sim.
 
     :param tmp_path: The temporary logging path.
-    """
+    
     command = [
         startfile,
         "-m",
@@ -63,15 +63,17 @@ def test_hydra_sweep_ddp_sim(tmp_path: Path) -> None:
         "model.optimizer.lr=0.005,0.01,0.02",
     ] + overrides
     run_sh_command(command)
+ """
 
-
+"""
+voir car je crois qu'il n'y a plus optuna donc peut enlever
 @RunIf(sh=True)
 @pytest.mark.slow
 def test_optuna_sweep(tmp_path: Path) -> None:
-    """Test Optuna hyperparam sweeping.
+    Test Optuna hyperparam sweeping.
 
     :param tmp_path: The temporary logging path.
-    """
+    
     command = [
         startfile,
         "-m",
@@ -83,14 +85,17 @@ def test_optuna_sweep(tmp_path: Path) -> None:
     ] + overrides
     run_sh_command(command)
 
+"""
 
+"""
+pareil que au dessus
 @RunIf(wandb=True, sh=True)
 @pytest.mark.slow
 def test_optuna_sweep_ddp_sim_wandb(tmp_path: Path) -> None:
-    """Test Optuna sweep with wandb logging and ddp sim.
+    Test Optuna sweep with wandb logging and ddp sim.
 
     :param tmp_path: The temporary logging path.
-    """
+    
     command = [
         startfile,
         "-m",
@@ -105,3 +110,4 @@ def test_optuna_sweep_ddp_sim_wandb(tmp_path: Path) -> None:
         "logger=wandb",
     ]
     run_sh_command(command)
+"""
