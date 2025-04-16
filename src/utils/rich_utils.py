@@ -13,7 +13,7 @@ from src.utils import pylogger
 
 log = pylogger.RankedLogger(__name__, rank_zero_only=True)
 
-
+#peut etre enlevé:print juste l'arbre d'arborescence
 @rank_zero_only
 def print_config_tree(
     cfg: DictConfig,
@@ -24,6 +24,7 @@ def print_config_tree(
         "logger",
         "trainer",
         "paths",
+        "extras",
         
     ),
     resolve: bool = False,
@@ -33,7 +34,7 @@ def print_config_tree(
 
     :param cfg: A DictConfig composed by Hydra.
     :param print_order: Determines in what order config components are printed. Default is ``("data", "model",
-    "callbacks", "logger", "trainer", "paths")``.
+    "callbacks", "logger", "trainer", "paths", "extras")``.
     :param resolve: Whether to resolve reference fields of DictConfig. Default is ``False``.
     :param save_to_file: Whether to export config to the hydra output folder. Default is ``False``.
     """
@@ -72,28 +73,3 @@ def print_config_tree(
     if save_to_file:
         with open(Path(cfg.paths.output_dir, "config_tree.log"), "w") as file:
             rich.print(tree, file=file)
-
-
-@rank_zero_only
-def enforce_tags(cfg: DictConfig, save_to_file: bool = False) -> None:
-    """Prompts user to input tags from command line if no tags are provided in config.
-
-    :param cfg: A DictConfig composed by Hydra.
-    :param save_to_file: Whether to export tags to the hydra output folder. Default is ``False``.
-    """
-    if not cfg.get("tags"):
-        if "id" in HydraConfig().cfg.hydra.job:
-            raise ValueError("Specify tags before launching a multirun!")
-
-        log.warning("No tags provided in config. Prompting user to input tags...")
-        tags = Prompt.ask("Enter a list of comma separated tags", default="dev")
-        tags = [t.strip() for t in tags.split(",") if t != ""]
-
-        with open_dict(cfg):
-            cfg.tags = tags
-
-        log.info(f"Tags: {cfg.tags}")
-
-    if save_to_file:
-        with open(Path(cfg.paths.output_dir, "tags.log"), "w") as file:
-            rich.print(cfg.tags, file=file)

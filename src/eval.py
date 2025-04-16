@@ -26,6 +26,7 @@ rootutils.setup_root(__file__, indicator=".project-root", pythonpath=True)
 
 from src.utils import (
     RankedLogger,
+    extras,
     instantiate_loggers,
     log_hyperparameters,
     task_wrapper,
@@ -88,6 +89,9 @@ def main(cfg: DictConfig) -> None:
     :param cfg: DictConfig configuration composed by Hydra.
     """
    
+    # apply extra utilities
+     # (e.g. ask for tags if none are provided in cfg, print cfg tree, etc.)
+    extras(cfg)
 
     evaluate(cfg)
 
