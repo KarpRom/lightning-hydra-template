@@ -1,7 +1,8 @@
 # @package _global_
 
 # to execute this experiment run:
-# python train.py experiment=example
+# python train.py experiment=default
+# you have an exemple in the Readme
 
 defaults:
   - override /data: mnist
@@ -17,13 +18,13 @@ tags: ["mnist", "simple_dense_net"]
 seed: 12345
 
 trainer:
-  min_epochs: 10
-  max_epochs: 10
-  gradient_clip_val: 0.5
+  min_epochs: null
+  max_epochs: null
+  gradient_clip_val: null
 
 model:
   optimizer:
-    lr: 0.002
+    lr: null
   net:
     lin1_size: 128
     lin2_size: 256
@@ -36,6 +37,6 @@ data:
 logger:
   wandb:
     tags: ${tags}
-    group: "mnist"
+    group: "you_model"
   aim:
-    experiment: "mnist"
+    experiment: "your_model"

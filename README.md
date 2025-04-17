@@ -1,6 +1,6 @@
 <div align="center">
 
-# Lightning-Hydra-Template
+# Lightning-Hydra-Template part for dev
 
 [![python](https://img.shields.io/badge/-Python_3.8_%7C_3.9_%7C_3.10-blue?logo=python&logoColor=white)](https://github.com/pre-commit/pre-commit)
 [![pytorch](https://img.shields.io/badge/PyTorch_2.0+-ee4c2c?logo=pytorch&logoColor=white)](https://pytorch.org/get-started/locally/)
@@ -609,9 +609,7 @@ Most of the implemented tests don't check for any specific output - they exist t
 
 Currently, the tests cover cases like:
 
-- running 1 train, val and test step
-- running 1 epoch on 1% of data, saving ckpt and resuming for the second epoch
-- running 2 epochs on 1% of data, with DDP simulated on CPU
+- test the tyoe of x and y
 
 And many others. You should be able to modify them easily for your use case.
 
@@ -1057,4 +1055,7 @@ You can override any parameter from command line like this
 
 ```bash
 python src/train.py trainer.max_epochs=20 data.batch_size=64
+```
+```bash
+python src/train.py model.optimizer.lr=1e-4
 ```

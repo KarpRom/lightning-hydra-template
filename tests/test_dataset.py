@@ -29,5 +29,5 @@ def test_dataset(batch_size: int) -> None:
     assert len(x) == batch_size
     assert len(y) == batch_size
     assert x.dtype == null #x type ,use torch.
-    assert y.dtype == null  #y type
+    assert y.dtype == null #y type
 
