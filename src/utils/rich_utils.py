@@ -13,7 +13,6 @@ from src.utils import pylogger
 
 log = pylogger.RankedLogger(__name__, rank_zero_only=True)
 
-#peut etre enlevé:print juste l'arbre d'arborescence
 @rank_zero_only
 def print_config_tree(
     cfg: DictConfig,

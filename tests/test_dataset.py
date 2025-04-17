@@ -6,16 +6,18 @@ import torch
 from src.data.mnist_datamodule import MNISTDataModule
 
 @pytest.mark.parametrize("batch_size", [32, 128])
-def test_mnist_datamodule(batch_size: int) -> None:
-    """Tests `MNISTDataModule` to verify that it can be downloaded correctly, that the necessary
+def test_dataset(batch_size: int) -> None:
+    """Tests your Dataset to verify that it can be downloaded correctly, that the necessary
     attributes were created (e.g., the dataloader objects), and that dtypes and batch sizes
     correctly match.
 
     :param batch_size: Batch size of the data to be loaded by the dataloader.
     """
+    raise NotImplementedError  #delete this if you implement the test
+
     data_dir = "data/"
 
-    dm = MNISTDataModule(data_dir=data_dir, batch_size=batch_size)
+    dm = null #your Datamodule
     dm.prepare_data()
 
     dm.setup()
@@ -26,5 +28,6 @@ def test_mnist_datamodule(batch_size: int) -> None:
     x, y = batch
     assert len(x) == batch_size
     assert len(y) == batch_size
-    assert x.dtype == torch.float32
-    assert y.dtype == torch.int64
+    assert x.dtype == null #x type ,use torch.
+    assert y.dtype == null  #y type
+
