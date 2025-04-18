@@ -197,7 +197,7 @@ python train.py logger=wandb
 <summary><b>Train model with chosen experiment config</b></summary>
 
 ```bash
-python train.py experiment=example
+python train.py experiment=default
 ```
 
 > **Note**: Experiment configs are placed in [configs/experiment/](configs/experiment/).
@@ -340,10 +340,6 @@ pytest
 
 # run tests from specific file
 pytest tests/test_dataset.py
-
-# run all tests except the ones marked as slow
-pytest -k "not slow"
-```
 
 </details>
 
@@ -609,11 +605,9 @@ Most of the implemented tests don't check for any specific output - they exist t
 
 Currently, the tests cover cases like:
 
-- test the tyoe of x and y
+- test the type of x and y
 
 And many others. You should be able to modify them easily for your use case.
-
-There is also `@RunIf` decorator implemented, that allows you to run tests only if certain conditions are met, e.g. GPU is available or system is not windows. See the [examples](tests/test_dataset.py).
 
 <br>
 
@@ -727,7 +721,6 @@ pre-commit autoupdate
 
 System specific variables (e.g. absolute paths to datasets) should not be under version control or it will result in conflict between different users. Your private keys also shouldn't be versioned since you don't want them to be leaked.<br>
 
-Template contains `.env.example` file, which serves as an example. Create a new file called `.env` (this name is excluded from version control in .gitignore).
 You should use it for storing environment variables like this:
 
 ```
@@ -982,7 +975,7 @@ SOFTWARE.
 <br>
 <br>
 
-**DELETE EVERYTHING ABOVE FOR YOUR PROJECT**
+**DELETE EVERYTHING ABOVE FOR YOUR PROJECT (This is the part for the user)**
 
 ______________________________________________________________________
 

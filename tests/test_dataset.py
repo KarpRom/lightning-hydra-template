@@ -3,8 +3,6 @@ from pathlib import Path
 import pytest
 import torch
 
-from src.data.mnist_datamodule import MNISTDataModule
-
 @pytest.mark.parametrize("batch_size", [32, 128])
 def test_dataset(batch_size: int) -> None:
     """Tests your Dataset to verify that it can be downloaded correctly, that the necessary
