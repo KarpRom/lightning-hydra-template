@@ -114,6 +114,9 @@ class MNISTDataModule(LightningDataModule):
 
         :param stage: The stage to setup. Either `"fit"`, `"validate"`, `"test"`, or `"predict"`. Defaults to ``None``.
         """
+
+        #raise NotImplementedError
+    
         # Divide batch size by the number of devices.
         if self.trainer is not None:
             if self.hparams.batch_size % self.trainer.world_size != 0:
