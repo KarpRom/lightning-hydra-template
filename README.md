@@ -85,13 +85,11 @@ The directory structure of new project looks like this:
 ```
 ├── configs                   <- Hydra configs
 │   ├── callbacks                <- Callbacks configs
+│   ├── common                   <- Trainer configs + Hydra configs + Project paths configs
 │   ├── data                     <- Data configs
 │   ├── experiment               <- Experiment configs
-│   ├── hydra                    <- Hydra configs
 │   ├── logger                   <- Logger configs
 │   ├── model                    <- Model configs
-│   ├── paths                    <- Project paths configs
-│   ├── trainer                  <- Trainer configs
 │   │
 │   ├── eval.yaml             <- Main config for evaluation
 │   └── train.yaml            <- Main config for training
