@@ -1,0 +1,38 @@
+# @package _global_
+
+# ---------- PATHS ----------
+paths:
+  root_dir: ${oc.env:PROJECT_ROOT}
+  data_dir: ${paths.root_dir}/data/
+  log_dir: ${paths.root_dir}/logs/
+  output_dir: ${hydra:runtime.output_dir}
+  work_dir: ${hydra:runtime.cwd}
+
+# ---------- TRAINER ----------
+trainer:
+  _target_: lightning.pytorch.trainer.Trainer
+  default_root_dir: ${paths.output_dir}
+  min_epochs: 1
+  max_epochs: 10
+  accelerator: cpu
+  devices: 1
+  check_val_every_n_epoch: 1
+  deterministic: false
+
+# ---------- HYDRA ----------
+hydra:
+  defaults:
+    - override hydra_logging: colorlog
+    - override job_logging: colorlog
+
+  run:
+    dir: ${paths.log_dir}/${task_name}/runs/${now:%Y-%m-%d}_${now:%H-%M-%S}_${extra_name}
+
+  sweep:
+    dir: ${paths.log_dir}/${task_name}/multiruns/${now:%Y-%m-%d}_${now:%H-%M-%S}_${extra_name}
+    subdir: ${hydra.job.num}
+
+  job_logging:
+    handlers:
+      file:
+        filename: ${hydra.runtime.output_dir}/${task_name}.log
