@@ -21,7 +21,7 @@ def test_dataset(batch_size: int) -> None:
     csv_path = os.path.join(data_dir, "dataset.csv")
 
     # Convertit en dict pour instanciation
-    dm = FOIEDataModule(data_dir=data_dir,csv_path=csv_path,batch_size=batch_size)
+    dm = MNISTDataModule(data_dir=data_dir,csv_path=csv_path,batch_size=batch_size)
 
     dm.prepare_data()
     dm.setup()
