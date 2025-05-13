@@ -1,6 +1,7 @@
 from omegaconf import OmegaConf
 from hydra.core.hydra_config import HydraConfig
 
+#on recup les paramètres overrides par la command bash 
 def get_compact_override_string():
     try:
         overrides = HydraConfig.get().overrides.task

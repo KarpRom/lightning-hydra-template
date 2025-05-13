@@ -3,10 +3,10 @@
 mlflow:
   _target_: lightning.pytorch.loggers.mlflow.MLFlowLogger
   # experiment_name: ""
-  # run_name: ""
+  run_name: ${now:%Y-%m-%d}_${now:%H-%M-%S}_${override_name:}
   tracking_uri: ${paths.log_dir}/mlflow/mlruns # run `mlflow ui` command inside the `logs/mlflow/` dir to open the UI
   tags: null
   # save_dir: "./mlruns"
   prefix: ""
-  artifact_location: null
+  artifact_location: ${paths.output_dir}/checkpoints
   # run_id: ""

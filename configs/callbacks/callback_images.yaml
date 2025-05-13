@@ -1,0 +1,3 @@
+log_predictions:
+  _target_: src.utils.imagelogger.callback_images.LogPredictionsCallback
+  num_images: 16
