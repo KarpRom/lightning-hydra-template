@@ -7,6 +7,6 @@ def get_image_logger(logger_type: str, **kwargs):
     if logger_type == "tensorboard":
         return TensorBoardImageLogger(writer=kwargs.get("writer"))
     elif logger_type == "mlflow":
-        return MLflowImageLogger(run_id=kwargs.get("run_id"))
+        return MLflowImageLogger(run_id=kwargs.get("run_id"),local_dir=kwargs.get("local_dir"))
     else:
         raise ValueError(f"Unsupported logger type: {logger_type}")

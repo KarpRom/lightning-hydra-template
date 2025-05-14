@@ -8,7 +8,7 @@ defaults:
   - override /data: null
   - override /model: null
   - override /callbacks: default
-  - override /trainer: default
+  
 
 # all parameters below will be merged with parameters from default configurations set above
 # this allows you to overwrite only specified parameters
@@ -16,21 +16,11 @@ defaults:
 tags: ["null", "simple_dense_net"]
 
 seed: null
+common:
+  trainer:
+    min_epochs: 1
+    max_epochs: 10
+    accelerator: cpu 
 
-trainer:
-  min_epochs: null
-  max_epochs: null
-  gradient_clip_val: null
-
-model:
-  optimizer:
-    lr: null
-  net:
-    lin1_size: 128
-    lin2_size: 256
-    lin3_size: 64
-  compile: false
-
-data:
-  batch_size: 64
+  
 

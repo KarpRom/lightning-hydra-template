@@ -1,3 +1,4 @@
+import os
 from typing import Any, Dict, List, Optional, Tuple
 
 import hydra
@@ -65,6 +66,7 @@ def train(cfg: DictConfig) -> Tuple[Dict[str, Any], Dict[str, Any]]:
 
     log.info("Instantiating loggers...")
     logger: List[Logger] = instantiate_loggers(cfg.get("logger"))
+    
 
     log.info(f"Instantiating trainer <{cfg.trainer._target_}>")
     trainer: Trainer = hydra.utils.instantiate(cfg.trainer, callbacks=callbacks, logger=logger)
@@ -77,7 +79,12 @@ def train(cfg: DictConfig) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         "logger": logger,
         "trainer": trainer,
     }
-
+    for cb in callbacks:
+        if hasattr(cb, "set_object_dict"):
+            image_log_dir = os.path.join(cfg.paths.output_dir, "checkpoints")
+            os.makedirs(image_log_dir, exist_ok=True)
+            cb.set_object_dict(object_dict)
+            cb.set_path_dir(image_log_dir)
     if logger:
         log.info("Logging hyperparameters!")
         log_hyperparameters(object_dict)

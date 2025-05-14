@@ -1,3 +1,4 @@
+from typing import Optional
 import torch
 import torchvision
 import matplotlib.pyplot as plt
@@ -10,34 +11,40 @@ import numpy as np  # utile pour flatten les axes si besoin
 from src.utils.imagelogger.image_loader import get_image_logger
 
 class LogPredictionsCallback(Callback):
-    def __init__(self, num_images: int = 8):
+    def __init__(self, num_images: int = 8, image_log_dir: Optional[str] = None):
         super().__init__()
         self.num_images = num_images
         self.image_loggers = []
+        self.object_dict = None
+        self.image_log_dir = image_log_dir
+
+    def set_object_dict(self, object_dict):
+        self.object_dict = object_dict
+    
+    def set_path_dir(self, image_log_dir):
+        self.image_log_dir = image_log_dir
 
     def _init_loggers(self, trainer):
-        loggers = trainer.logger
-
-        # 👇 Si c'est un LoggerCollection custom
-        if hasattr(loggers, "_loggers"):
-            loggers = loggers._loggers  # Extraire les loggers individuels
-
-        elif not isinstance(loggers, (list, tuple)):
-            loggers = [loggers]
+        loggers = self.object_dict["logger"]
+        loggers = loggers 
 
         logger_instances = []
+        
         for l in loggers:
-            if "TensorBoardLogger" in str(type(l)):
+            logger_type = type(l).__name__
+            if logger_type == "TensorBoardLogger":
                 print("✅ TensorBoardLogger détecté")
-                logger_instances.append(get_image_logger("tensorboard", writer=l.experiment))
-            elif "MLFlowLogger" in str(type(l)):
+                logger_instances.append(get_image_logger("tensorboard", writer=l.experiment)) 
+                self.tensorboard_log_dir = l.log_dir
+            elif logger_type == "MLFlowLogger":
                 print("✅ MLFlowLogger détecté")
-                logger_instances.append(get_image_logger("mlflow", run_id=l.run_id))
+                logger_instances.append(get_image_logger("mlflow", run_id=l.run_id, local_dir=self.image_log_dir))
             else:
                 print(f"⚠️ Logger non pris en charge : {type(l)}")
 
         return logger_instances
 
+    
 
     def on_validation_epoch_end(self, trainer, pl_module):
         if not self.image_loggers:
