@@ -7,8 +7,8 @@ defaults:
   - common/config_base
   - data: mnist
   - model: mnist
-  - callbacks: default
-  - logger: null # set logger here or use command line (e.g. `python train.py logger=tensorboard`)
+  - /common/callbacks@callbacks: default  # Notation explicite  
+  - /common/logger@logger: mlflow   # set logger here or use command line (e.g. `python train.py logger=tensorboard`)
 
   # experiment configs allow for version control of specific hyperparameters
   # e.g. best hyperparameters for given model and datamodule
