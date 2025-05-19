@@ -55,6 +55,14 @@ defaults:
   ...
 ```
 ---
+The script train.py loads the default training configuration defined in configs/train.yaml, which itself includes all paths, trainer settings, model, data, callbacks, and logger.
+
+To launch a training run with the default configuration, simply run:
+```bash
+  python src/train.py 
+```
+
+---
 We will load `configs/common/config_base.yaml`, which contains the trainer parameters and paths.
 
 ```yaml
