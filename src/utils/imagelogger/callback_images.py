@@ -33,11 +33,9 @@ class LogPredictionsCallback(Callback):
         for l in loggers:
             logger_type = type(l).__name__
             if logger_type == "TensorBoardLogger":
-                print("✅ TensorBoardLogger détecté")
                 logger_instances.append(get_image_logger("tensorboard", writer=l.experiment)) 
                 self.tensorboard_log_dir = l.log_dir
             elif logger_type == "MLFlowLogger":
-                print("✅ MLFlowLogger détecté")
                 logger_instances.append(get_image_logger("mlflow", run_id=l.run_id, local_dir=self.image_log_dir))
             else:
                 print(f"⚠️ Logger non pris en charge : {type(l)}")
