@@ -1,7 +1,10 @@
+import os
 from pathlib import Path
 
 import pytest
 import torch
+
+from src.data.mnist_datamodule import MNISTDataModule
 
 @pytest.mark.parametrize("batch_size", [32, 128])
 def test_dataset(batch_size: int) -> None:
@@ -11,17 +14,17 @@ def test_dataset(batch_size: int) -> None:
 
     :param batch_size: Batch size of the data to be loaded by the dataloader.
     """
-    raise NotImplementedError  #delete this if you implement the test
+    #raise NotImplementedError  #delete this if you implement the test
 
     
 
     # Résolution manuelle des chemins
     root_dir = os.environ["PROJECT_ROOT"]
     data_dir = os.path.join(root_dir, "data")
-    csv_path = os.path.join(data_dir, "dataset.csv")
+    
 
     # Convertit en dict pour instanciation
-    dm = MNISTDataModule(data_dir=data_dir,csv_path=csv_path,batch_size=batch_size)
+    dm = MNISTDataModule(data_dir=data_dir,batch_size=batch_size)
 
     dm.prepare_data()
     dm.setup()
