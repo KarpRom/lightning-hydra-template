@@ -7,7 +7,7 @@ import torch
 def test_dataset(batch_size: int) -> None:
     """Tests your Dataset to verify that it can be downloaded correctly, that the necessary
     attributes were created (e.g., the dataloader objects), and that dtypes and batch sizes
-    correctly match.
+    correctly match. 
 
     :param batch_size: Batch size of the data to be loaded by the dataloader.
     """
