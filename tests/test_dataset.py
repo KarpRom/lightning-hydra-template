@@ -14,7 +14,7 @@ def test_dataset(batch_size: int) -> None:
 
     :param batch_size: Batch size of the data to be loaded by the dataloader.
     """
-    #raise NotImplementedError  #delete this if you implement the test
+    raise NotImplementedError  #delete this if you implement the test
 
     
 
