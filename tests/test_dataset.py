@@ -18,9 +18,7 @@ def test_dataset(batch_size: int) -> None:
 
     
 
-    # Résolution manuelle des chemins
-    root_dir = os.environ["PROJECT_ROOT"]
-    data_dir = os.path.join(root_dir, "data")
+    data_dir = "data/"
     
 
     # Convertit en dict pour instanciation
@@ -35,11 +33,11 @@ def test_dataset(batch_size: int) -> None:
 
     # Vérifie un batch
     batch = next(iter(dm.train_dataloader()))
-    x, y = batch[:2]
+    x, y = batch
 
     # Vérifie le type et la taille de x et y 
     assert len(x) == batch_size
     assert len(y) == batch_size
-    assert isinstance(x, None)
-    assert isinstance(y, None)
+    assert x.dtype == torch.float32
+    assert y.dtype == torch.int64
 
