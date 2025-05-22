@@ -83,6 +83,7 @@ For example, you can't resume hydra-based multirun or hyperparameter search.
 The directory structure of new project looks like this:
 
 ```
+├── .github/workflows                   <- CI config
 ├── configs                   <- Hydra configs
 │   ├── callbacks                <- Callbacks configs
 │   ├── common                   <- Trainer configs + Hydra configs + Project paths configs dans config_base
@@ -117,7 +118,8 @@ The directory structure of new project looks like this:
 ├── pyproject.toml            <- Configuration options for testing and linting
 ├── requirements.txt          <- File for installing python dependencies
 ├── setup.py                  <- File for installing project as a package
-└── README.md
+├── README.md
+└── .gitlab-ci.yml
 ```
 
 <br>
@@ -171,14 +173,9 @@ python train.py +model.new_param="owo"
 
 
 <details>
-<summary><b>Train model with any logger available in PyTorch Lightning, like W&B or Tensorboard</b></summary>
+<summary><b>Train model with any logger available in PyTorch Lightning, like MLFLOW or Tensorboard</b></summary>
 
-```yaml
-# set project and entity names in `configs/logger/wandb`
-wandb:
-  project: "your_project_name"
-  entity: "your_wandb_team_name"
-```
+
 
 ```bash
 # train model with Weights&Biases (link to wandb dashboard should appear in the terminal)
@@ -336,7 +333,7 @@ pytest
 
 # run tests from specific file
 pytest tests/test_dataset.py
-
+```
 </details>
 
 <br>
@@ -461,43 +458,33 @@ For example, you can use them to version control best hyperparameters for each c
 
 ```yaml
 # @package _global_
-
-# to execute this experiment run:
-# python train.py experiment=example
-
-defaults:
-  - override /data: mnist.yaml
-  - override /model: mnist.yaml
-  - override /callbacks: default.yaml
-  - override /trainer: default.yaml
-
-# all parameters below will be merged with parameters from default configurations set above
-# this allows you to overwrite only specified parameters
-
-tags: ["mnist", "simple_dense_net"]
-
-seed: 12345
-
-trainer:
-  min_epochs: 10
-  max_epochs: 10
+defaults:  
+  - override /data: mnist  
+  - override /model: mnist  
+  - override /common/callbacks@callbacks: default  
+  - override /common/logger@logger: mlflow  
+  
+# Paramètres spécifiques à cette expérience  
+tags: ["mnist"]  
+  
+# Surcharger des paramètres spécifiques  
+trainer:  
+  max_epochs: 10  
+  min_epochs: 5  
   gradient_clip_val: 0.5
-
-model:
-  optimizer:
-    lr: 0.002
-  net:
-    lin1_size: 128
-    lin2_size: 256
-    lin3_size: 64
-
-data:
+  accelerator: cpu  
+  devices: 1
+  
+model:  
+  optimizer:  
+    lr: 0.002  
+  net:  
+    lin1_size: 128  
+    lin2_size: 256  
+    lin3_size: 64  
+  
+data:  
   batch_size: 64
-
-logger:
-  wandb:
-    tags: ${tags}
-    group: "mnist"
 ```
 
 </details>
